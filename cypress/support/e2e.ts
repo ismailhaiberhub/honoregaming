@@ -14,4 +14,15 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
+
+Cypress.on("window:before:load", (win) => {
+  win.console.log = () => {};
+  win.console.info = () => {};
+  win.console.debug = () => {};
+});
+
+Cypress.on("uncaught:exception", (err, runnable) => {
+  // ❗ Only return false if you're *sure* it's unrelated to test logic
+  return false;
+});

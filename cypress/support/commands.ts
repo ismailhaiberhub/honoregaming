@@ -22,23 +22,31 @@ Cypress.Commands.add("waitForPageLoad", () => {
 });
 
 Cypress.Commands.add("theBrowserisClean", () => {
+  cy.clearAllSessionStorage();
+  cy.clearLocalStorage();
   cy.clearCookies();
+  cy.clearAllLocalStorage();
 });
 
 Cypress.Commands.add("waitForClickable", (selector, options = {}) => {
-  cy.get("body", options).then(($body) => {
-    if ($body.find(selector).length > 0) {
-      cy.get(selector, options)
-        .should("be.visible")
-        .and("not.be.disabled")
-        .should(($el) => {
-          const style = window.getComputedStyle($el[0]);
-          expect(style.pointerEvents).to.not.equal("none");
-        });
-    } else {
-      cy.log(`Element ${selector} not found in DOM, skipping waitForClickable`);
-    }
-  });
+  cy.wait(3000)
+    .get("body", options)
+    .then(($body) => {
+      if ($body.find(selector).length > 0) {
+        cy.wait(2000)
+          .get(selector, options)
+          .should("be.visible")
+          .and("not.be.disabled")
+          .should(($el) => {
+            const style = window.getComputedStyle($el[0]);
+            expect(style.pointerEvents).to.not.equal("none");
+          });
+      } else {
+        cy.log(
+          `Element ${selector} not found in DOM, skipping waitForClickable`
+        );
+      }
+    });
 });
 
 //

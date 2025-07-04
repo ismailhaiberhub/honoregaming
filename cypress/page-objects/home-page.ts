@@ -6,7 +6,7 @@ class StradivariusHomePage {
   private locationFieldSelector = "[data-testid='autocomplete-container-test']";
   private openSuggestionsButtonSelector = "[aria-label='Open suggestions']";
   private listSuggestionSelector = "#suggestions-list";
-  private languageBoxSelector = "div[role='combobox']";
+  private languageBoxSelector = "[role='combobox']";
   private languageChoicesSelector = "#select-language-options";
   private buttonEnterSelector = "button[data-text='Enter']";
 
@@ -22,7 +22,10 @@ class StradivariusHomePage {
     this.stradivariusHomePageAcceptCookies();
     this.stradivariusHomePageChooseCountry();
     this.stradivariusHomePageLanguage();
-    cy.get(this.buttonEnterSelector).should("be.visible").and("not.be.disabled").click()
+    cy.get(this.buttonEnterSelector)
+      .should("be.visible")
+      .and("not.be.disabled")
+      .click();
   }
   private stradivariusHomePageLoaded() {
     cy.waitForPageLoad();
