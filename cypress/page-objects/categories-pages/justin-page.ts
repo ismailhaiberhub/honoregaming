@@ -46,7 +46,7 @@ class JustInPage {
     cy.get(this.filterButtonSelector)
       .should("be.visible")
       .click({ force: true });
-    cy.find(this.filterCategoryColorsSelector)
+    cy.get(this.filterCategoryColorsSelector)
       .find(this.filterCategoryColorBlack)
       .filter('[style*="outline:orangered solid 2px"]')
       .should("have.length", 0);
